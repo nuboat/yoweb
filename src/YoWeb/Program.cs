@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace YoWeb
 {
@@ -7,8 +8,10 @@ namespace YoWeb
         public static void Main(string[] args)
         {
             var host = new WebHostBuilder()
-                .UseKestrel()
+                .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseStartup<Startup>()
+                .UseKestrel()
+                .UseIISIntegration()
                 .Build();
 
             host.Run();

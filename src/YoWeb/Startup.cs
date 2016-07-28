@@ -1,17 +1,23 @@
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
+using YoWeb.Facade;
+using YoWeb.Module.Hello;
 
 namespace YoWeb
 {
     class Startup
     {
+        public void ConfigureServices(IServiceCollection services) 
+        {
+            services.AddMvc();
+
+            services.AddLogging();
+
+            services.AddSingleton<IHelloWorld, HelloWorld>();
+        }
         public void Configure(IApplicationBuilder app)
         {
-            app.Run(context =>
-            {
-                return context.Response.WriteAsync("Hello from ASP.NET Core!");
-            });
+            app.UseMvcWithDefaultRoute();
         }
     }
 }
